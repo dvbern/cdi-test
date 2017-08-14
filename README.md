@@ -1,4 +1,4 @@
-# dvbern-lib-cditest
+# dvbern-lib-cdi-test
 
 Testrunner for JUnit-Tests with CDI.
 
@@ -13,7 +13,7 @@ Testrunner for JUnit-Tests with CDI.
 ```xml
 <dependency>
 	<groupId>ch.dvbern.oss.lib</groupId>
-	<artifactId>dvbern-lib-cditest</artifactId>
+	<artifactId>dvbern-lib-cdi-test</artifactId>
 	<version>(NEWEST_VERSION)</version>
 </dependency>
 ```
@@ -36,7 +36,7 @@ One healthy social atmospehere is very important to us, wherefore we rate our Co
 
 * **DV Bern AG** - *Initial work* - [dvbern](https://github.com/dvbern)
 
-See also the list of [contributors](https://github.com/dvbern/lib-cditest/contributors)
+See also the list of [contributors](https://github.com/dvbern/lib-cdi-test/contributors)
  who participated in this project.
 
 ## License
