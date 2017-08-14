@@ -61,6 +61,17 @@ public class CDIRunner extends BlockJUnit4ClassRunner {
 	}
 
 	/**
+	 * Creates a BlockJUnit4ClassRunner to run {@code klass}
+	 *
+	 * @param klass Test Class
+	 * @throws org.junit.runners.model.InitializationError if the test class is malformed.
+	 */
+	public CDIRunner(final Class<?> klass) throws InitializationError {
+		super(klass);
+		this.klass = klass;
+	}
+
+	/**
 	 * Der Listener kuemmer sich darum, das am Ende des gesamten Test-Runs der Weld-Container
 	 * definiert gestoppt wird.
 	 * Damit werden dann {@link PostConstruct} und aehnliche Konstrukte aufgerufen.
@@ -89,17 +100,6 @@ public class CDIRunner extends BlockJUnit4ClassRunner {
 			weldShutdownListener = new ShutdownOnFinishedListener();
 			notifier.addListener(weldShutdownListener);
 		}
-	}
-
-	/**
-	 * Creates a BlockJUnit4ClassRunner to run {@code klass}
-	 *
-	 * @param klass Test Class
-	 * @throws org.junit.runners.model.InitializationError if the test class is malformed.
-	 */
-	public CDIRunner(final Class<?> klass) throws InitializationError {
-		super(klass);
-		this.klass = klass;
 	}
 
 	@Override
