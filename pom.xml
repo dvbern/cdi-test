@@ -26,7 +26,7 @@
 	<groupId>ch.dvbern.oss.lib</groupId>
 	<artifactId>dvbern-lib-cditest</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.1-SNAPSHOT-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 
 	<name>DVBern CDI-Test</name>
 
