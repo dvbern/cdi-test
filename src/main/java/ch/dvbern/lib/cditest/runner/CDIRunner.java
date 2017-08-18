@@ -43,14 +43,11 @@ import org.slf4j.LoggerFactory;
  */
 public class CDIRunner extends BlockJUnit4ClassRunner {
 
-	private final Class<?> klass;
-
 	private static final Weld weld;
 	private static final WeldContainer CONTAINER;
+	private static final Logger LOG = LoggerFactory.getLogger(CDIRunner.class);
 	private static boolean weldRunning = false;
 	private static ShutdownOnFinishedListener weldShutdownListener = null;
-
-	private static final Logger LOG = LoggerFactory.getLogger(CDIRunner.class);
 
 	static {
 		LOG.info("Starting up Weld...");
@@ -60,36 +57,7 @@ public class CDIRunner extends BlockJUnit4ClassRunner {
 		LOG.info("Weld startup finished");
 	}
 
-	/**
-	 * Der Listener kuemmer sich darum, das am Ende des gesamten Test-Runs der Weld-Container
-	 * definiert gestoppt wird.
-	 * Damit werden dann {@link PostConstruct} und aehnliche Konstrukte aufgerufen.
-	 */
-	private static final class ShutdownOnFinishedListener extends RunListener {
-		@Override
-		public void testRunFinished(Result result) throws Exception {
-			if (!weldRunning) {
-				LOG.error("Weld not running???\nEither CDIRunner is broken or there was an error initializing Weld");
-			} else {
-				LOG.info("Shutting down Weld...");
-				CONTAINER.getBeanManager().fireEvent(new TestRunFinished(result));
-
-				weld.shutdown();
-				weldRunning = false;
-				LOG.info("Weld shutdown finished");
-			}
-		}
-	}
-
-	/**
-	 * Versucht, den {@link ShutdownOnFinishedListener} genau einmal im aktuellen @link {@link RunNotifier} zu registrieren.
-	 */
-	private static void registerShutdownListenerOnce(RunNotifier notifier) {
-		if (weldShutdownListener == null) {
-			weldShutdownListener = new ShutdownOnFinishedListener();
-			notifier.addListener(weldShutdownListener);
-		}
-	}
+	private final Class<?> klass;
 
 	/**
 	 * Creates a BlockJUnit4ClassRunner to run {@code klass}
@@ -102,6 +70,16 @@ public class CDIRunner extends BlockJUnit4ClassRunner {
 		this.klass = klass;
 	}
 
+	/**
+	 * Versucht, den {@link ShutdownOnFinishedListener} genau einmal im aktuellen @link {@link RunNotifier} zu registrieren.
+	 */
+	private static void registerShutdownListenerOnce(RunNotifier notifier) {
+		if (weldShutdownListener == null) {
+			weldShutdownListener = new ShutdownOnFinishedListener();
+			notifier.addListener(weldShutdownListener);
+		}
+	}
+
 	@Override
 	protected Object createTest() throws Exception {
 
@@ -109,7 +87,8 @@ public class CDIRunner extends BlockJUnit4ClassRunner {
 		try {
 			createdTest = CONTAINER.instance().select(klass).get();
 		} catch (UnsatisfiedResolutionException e) {
-			LOG.error("Unable to create test class {}. Did you create an empty 'META-INF/beans.xml' file in the " + "test's resources folder?", klass);
+			LOG.error("Unable to create test class {}. Did you create an empty 'META-INF/beans.xml' file in the " + "test's resources folder?",
+				klass);
 			throw e;
 		}
 		CONTAINER.getBeanManager().fireEvent(new TestClassCreated(createdTest));
@@ -147,5 +126,26 @@ public class CDIRunner extends BlockJUnit4ClassRunner {
 	private EachTestNotifier makeNotifier(final FrameworkMethod method, final RunNotifier notifier) {
 		final Description description = describeChild(method);
 		return new EachTestNotifier(notifier, description);
+	}
+
+	/**
+	 * Der Listener kuemmer sich darum, das am Ende des gesamten Test-Runs der Weld-Container
+	 * definiert gestoppt wird.
+	 * Damit werden dann {@link PostConstruct} und aehnliche Konstrukte aufgerufen.
+	 */
+	private static final class ShutdownOnFinishedListener extends RunListener {
+		@Override
+		public void testRunFinished(Result result) throws Exception {
+			if (!weldRunning) {
+				LOG.error("Weld not running???\nEither CDIRunner is broken or there was an error initializing Weld");
+			} else {
+				LOG.info("Shutting down Weld...");
+				CONTAINER.getBeanManager().fireEvent(new TestRunFinished(result));
+
+				weld.shutdown();
+				weldRunning = false;
+				LOG.info("Weld shutdown finished");
+			}
+		}
 	}
 }
