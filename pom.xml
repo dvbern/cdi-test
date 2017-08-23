@@ -23,7 +23,7 @@
         <version>1.0.3</version>
     </parent>
 
-    <groupId>ch.dvbern.oss.lib.cditest</groupId>
+    <groupId>ch.dvbern.oss.cditest</groupId>
     <artifactId>cdi-test</artifactId>
     <packaging>jar</packaging>
     <version>1.0.2-SNAPSHOT</version>
@@ -52,7 +52,7 @@
 
     <issueManagement>
         <system>github-issues</system>
-        <url>https://github.com/dvbern/lib-cdi-test/issues</url>
+        <url>https://github.com/dvbern/cdi-test/issues</url>
     </issueManagement>
 
     <properties>
