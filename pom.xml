@@ -20,7 +20,7 @@
     <parent>
         <groupId>ch.dvbern.oss.maven</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.5</version>
     </parent>
 
     <groupId>ch.dvbern.oss.cditest</groupId>
@@ -29,6 +29,13 @@
     <version>1.0.4-SNAPSHOT</version>
 
     <name>DVBern CDI-Test</name>
+    <description>Testrunner for JUnit-Tests with CDI</description>
+    <url>http://github.com/dvbern/cdi-test</url>
+
+    <properties>
+        <maven-compiler-plugin.target>1.6</maven-compiler-plugin.target>
+        <maven-compiler-plugin.source>1.6</maven-compiler-plugin.source>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -60,9 +67,19 @@
         <url>https://github.com/dvbern/cdi-test/issues</url>
     </issueManagement>
 
-    <properties>
-        <maven-compiler-plugin.target>1.6</maven-compiler-plugin.target>
-        <maven-compiler-plugin.source>1.6</maven-compiler-plugin.source>
-    </properties>
+    <developers>
+        <developer>
+            <name>DV Bern AG developers</name>
+            <email>hallo@dvbern.ch</email>
+            <organization>DV Bern AG</organization>
+            <organizationUrl>http://www.dvbern.ch</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/dvbern/cdi-test.git</connection>
+        <developerConnection>scm:git:ssh://github.com:dvbern/cdi-test.git</developerConnection>
+        <url>http://github.com/dvbern/cdi-test/tree/master</url>
+    </scm>
 
 </project>
