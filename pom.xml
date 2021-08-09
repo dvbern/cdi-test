@@ -20,38 +20,45 @@
     <parent>
         <groupId>ch.dvbern.oss.maven</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0.3</version>
+        <version>3.0.5</version>
     </parent>
 
     <groupId>ch.dvbern.oss.cditest</groupId>
     <artifactId>cdi-test</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
 
     <name>DVBern CDI-Test</name>
+    <description>Testrunner for JUnit-Tests with CDI</description>
+    <url>http://github.com/dvbern/cdi-test</url>
+
+    <properties>
+        <maven-compiler-plugin.target>1.6</maven-compiler-plugin.target>
+        <maven-compiler-plugin.source>1.6</maven-compiler-plugin.source>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.9</version>
-            <scope>provided</scope>
+            <version>4.13.1</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se</artifactId>
-            <version>2.4.4.Final</version>
+            <version>2.4.8.Final</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>annotations</artifactId>
-            <version>2.0.3</version>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-annotations</artifactId>
+            <version>${spotbugs-maven-plugin.version}</version>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.22</version>
+            <version>1.7.32</version>
         </dependency>
     </dependencies>
 
@@ -60,9 +67,36 @@
         <url>https://github.com/dvbern/cdi-test/issues</url>
     </issueManagement>
 
-    <properties>
-        <maven-compiler-plugin.target>1.6</maven-compiler-plugin.target>
-        <maven-compiler-plugin.source>1.6</maven-compiler-plugin.source>
-    </properties>
+    <developers>
+        <developer>
+            <name>DV Bern AG developers</name>
+            <email>hallo@dvbern.ch</email>
+            <organization>DV Bern AG</organization>
+            <organizationUrl>https://www.dvbern.ch</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/dvbern/cdi-test.git</connection>
+        <developerConnection>scm:git:ssh://github.com:dvbern/cdi-test.git</developerConnection>
+        <url>https://github.com/dvbern/cdi-test</url>
+    </scm>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <configuration>
+                        <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
+                        <bundleAuditAnalyzerEnabled>false</bundleAuditAnalyzerEnabled>
+                        <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                        <suppressionFile>dependency-check-suppressions.xml</suppressionFile>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 </project>
